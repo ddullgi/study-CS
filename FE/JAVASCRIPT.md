@@ -1,5 +1,7 @@
 # JAVASCRIPT
 
+- [scope](#scope)
+
 <br>
 
 ## scope
