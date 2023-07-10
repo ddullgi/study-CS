@@ -8,6 +8,7 @@
 ## Javascript
 
 - [scope](FE/Javascript.md#scope)
+- [AJAX](FE/Javascript.md#AJAX)
 
 ## 네트워크
 
