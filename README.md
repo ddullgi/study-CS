@@ -7,7 +7,7 @@
 
 ## Javascript
 
-- [scope](FE/JAVASCRIPT.md#scope)
+- [scope](FE/Javascript.md#scope)
 
 ## 네트워크
 
