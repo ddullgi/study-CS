@@ -1,6 +1,7 @@
 # next.js
 
 - [next/link](#nextlink)
+- [next/router](#nextrouter)
 
 <br>
 
@@ -15,8 +16,13 @@
 ```javascript
 import Link from "next/link";
 
-<Link href="/링크경로">링크이름</Link>;
+// <Link href="/링크경로">링크이름</Link>;
+<Link href="/section1/getStaticProps">/getStaticProps</Link>;
 ```
+
+![image-20230713231356303](https://raw.githubusercontent.com/ddullgi/image_sever/master/img/image-20230713231356303.png)
+
+렌더링 후 element 상에서는 `<a>`태그로서 동작한다.
 
 #### 스크롤에 따른 지연 로딩
 
@@ -44,3 +50,31 @@ export default function Links() {
 > #### 주의할 점
 >
 > next 프로젝트를 dev 환경에서 실행할 경우 프리로딩이 수행되지 않고 클릭했을 때 실행된다는 점을 인지하고 있어야합니다.
+
+## next/router
+
+> [next/link](#nextlink)의 내용 참고
+
+`next/router`는 Next.js에서 제공하는 라우팅 관련 기능을 사용할 수 있는 모듈입니다. `next/link`와 비슷한 역할을 하지만 프리렌더링 기능은 제공하지 않습니다.
+
+- 사용법
+
+```jsx
+import { useRouter } from "next/router";
+
+export default function Links() {
+  const router = useRouter();
+
+  return (
+    <button
+      onClick={() => {
+        router.push("/section1/getStaticProps");
+      }}
+    >
+      /getStaticProps
+    </button>
+  );
+}
+```
+
+`const router = useRouter();`를 선언한 후 onClick에 콜백 함수로 페이지 링크를 push 해주면됩니다.
