@@ -2,6 +2,7 @@
 
 - [scope](#scope)
 - [AJAX](#AJAX)
+- [CSR vs SSR vs SSG](#csr-vs-ssr-vs-ssg)
 
 <br>
 
@@ -34,3 +35,21 @@
 > **XMLHttpRequest**
 >
 > 서버와 상호작용하기 위해 사용되며 전체 페이지의 새로 고침 없이 데이터를 받아 올 수 있는 자바스크립트의 객체입니다. 이름과 달리 XML뿐만 아니라 모든 종류의 데이터를 받아올 수 있습니다.
+
+## CSR vs SSR vs SSG
+
+#### Client Side Rendering (CSR)
+
+![CSR](https://miro.medium.com/v2/resize:fit:720/format:webp/1*CRiH0hUGoS3aoZaIY4H2yg.png)
+
+CSR은 클라이언트 측에서 웹 페이지를 렌더링하는 방식입니다. 브라우저에서 HTML, CSS, JavaScript와 같은 모든 웹 페이지 요소를 다운로드한 후, 클라이언트 측에서 동적으로 페이지를 구성합니다. 이는 초기 로드 시간이 길지만, 이후에는 더 빠른 페이지 전환과 더 나은 사용자 경험을 제공합니다. CSR은 주로 React, Vue.js, AngularJS와 같은 프론트엔드 프레임워크와 함께 사용됩니다.
+
+#### Server Side Rendering (SSR)
+
+![SSR](https://miro.medium.com/v2/resize:fit:720/format:webp/1*jJkEQpgZ8waQ5P-W5lhxuQ.png)
+
+SSR은 서버에서 웹 페이지를 완전히 렌더링한 후 클라이언트에게 전달하는 방식입니다. 서버는 HTML, CSS, JavaScript와 같은 모든 웹 페이지 요소를 렌더링하고 클라이언트에게 전달합니다. 이는 초기 로드 시간이 빠르지만, 서버 측에서 렌더링하는 데 필요한 리소스가 많아질 수 있습니다. SSR은 Next.js, Nuxt.js와 같은 프레임워크에서 주로 사용되며, 서버 측에서 데이터를 렌더링하기 때문에 검색 엔진 최적화(SEO)에 유리합니다.
+
+#### Static Site Generation (SSG)
+
+SSG는 빌드 시점에서 웹 페이지를 사전에 렌더링하여 정적인 HTML 파일을 생성하는 방식입니다. 개발자는 사전에 정의된 데이터 소스(예: Markdown 파일, 데이터베이스 등)에서 데이터를 가져와 페이지를 미리 렌더링합니다. 생성된 정적 파일은 서버에 배포되어 클라이언트에게 제공됩니다. SSG는 동적인 요청이 없을 경우 서버에 대한 부하가 없으며, 초기 로딩 속도가 매우 빠르고 캐싱을 활용할 수 있어 성능이 우수합니다. 주로 Next.js, Gatsby.js와 같은 프레임워크에서 사용되며, 정적인 컨텐츠에 적합합니다.

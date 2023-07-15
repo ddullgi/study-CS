@@ -12,6 +12,7 @@
 
 - [scope](FE/Javascript.md#scope)
 - [AJAX](FE/Javascript.md#AJAX)
+- [CSR vs SSR vs SSG](FE/Javascript.md#csr-vs-ssr-vs-ssg)
 
 ## Typescript
 
