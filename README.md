@@ -2,11 +2,16 @@
 
 # 📝 Table of Contents
 
+- [HTML](#html)
 - [Javascript](#javascript)
 - [Typescript](#Typescript)
 - [React](#react)
 - [next.js](#nextjs)
 - [네트워크](#네트워크)
+
+## HTML
+
+- [시맨틱 태그](FE/HTML.md#시맨틱-태그)
 
 ## Javascript
 
