@@ -2,6 +2,7 @@
 
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
+- [next/image](#nextimage)
 
 <br>
 
@@ -78,3 +79,5 @@ export default function Links() {
 ```
 
 `const router = useRouter();`를 선언한 후 onClick에 콜백 함수로 페이지 링크를 push 해주면됩니다.
+
+## next/image
