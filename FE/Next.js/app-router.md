@@ -1,15 +1,24 @@
-# next.js
+# app router
 
 - [app router](#app-router)
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
-- [next/image](#nextimage)
 
 <br>
 
 ## app router
 
-`next.js` 13버전에 추가된 새로운 라우팅 방식이다.
+Next.js 13 버전에서는 React Server Components를 기반으로 한 새로운 App Router가 도입되었습니다. 이 App Router는 공유 레이아웃, 중첩 라우팅, 로딩 상태 처리, 에러 처리 등 다양한 기능을 지원합니다.
+
+App Router는 "app"이라는 새 디렉토리에서만 작동합니다. 이 새 디렉토리는 기존의 "pages" 디렉토리와 함께 사용되며, 점진적으로 App Router로 바뀔 수 있도록 복수 지원합니다. 이를 통해 기존의 "pages" 디렉토리를 사용하던 기능과 함께 새로운 App Router를 사용하는 기능을 혼용할 수 있습니다. 다만, 두 가지 라우팅 방식이 같은 경로를 가지고 있다면 충돌을 방지하기 위해 빌드 타임에 App Router이 Pages Router보다 우선적용됩니다.
+
+## 파일 기반 라우트
+
+Next.js는 파일 시스템 기반의 라우터를 사용합니다. 이때 폴더는 라우트를 정의하는 데 사용됩니다.
+
+![route](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Froute-segments-to-path-segments.png&w=1920&q=75&dpl=dpl_3guogY6YECQnnD8P1bp8UJe7CDCH)
+
+각 폴더는 URL 세그먼트에 매핑되는 라우트 세그먼트를 나타냅니다. 중첩된 라우트를 만들기 위해 폴더를 서로 중첩할 수 있습니다.
 
 ## next/link
 
@@ -84,5 +93,3 @@ export default function Links() {
 ```
 
 `const router = useRouter();`를 선언한 후 onClick에 콜백 함수로 페이지 링크를 push 해주면됩니다.
-
-## next/image
