@@ -12,7 +12,9 @@ Next.js 13 버전에서는 React Server Components를 기반으로 한 새로운
 
 App Router는 "app"이라는 새 디렉토리에서만 작동합니다. 이 새 디렉토리는 기존의 "pages" 디렉토리와 함께 사용되며, 점진적으로 App Router로 바뀔 수 있도록 복수 지원합니다. 이를 통해 기존의 "pages" 디렉토리를 사용하던 기능과 함께 새로운 App Router를 사용하는 기능을 혼용할 수 있습니다. 다만, 두 가지 라우팅 방식이 같은 경로를 가지고 있다면 충돌을 방지하기 위해 빌드 타임에 App Router이 Pages Router보다 우선적용됩니다.
 
-## 파일 기반 라우트
+<br>
+
+### 파일 기반 라우트
 
 Next.js는 파일 시스템 기반의 라우터를 사용합니다. 이때 폴더는 라우트를 정의하는 데 사용됩니다.
 
@@ -20,7 +22,9 @@ Next.js는 파일 시스템 기반의 라우터를 사용합니다. 이때 폴�
 
 각 폴더는 URL segment 에 매핑되는 라우트 segment 를 나타냅니다.
 
-## 파일 컨벤션
+<br>
+
+### 파일 컨벤션
 
 Next.js는 중첩된 라우트에서 특정 동작을 가진 UI를 만들기 위해 다음과 같은 파일 컨벤션을 제공합니다.
 
@@ -36,7 +40,9 @@ Next.js는 중첩된 라우트에서 특정 동작을 가진 UI를 만들기 위
 
 특수 파일 이외에도, 자신이 생성한 파일(예: 컴포넌트, 스타일, 테스트 등)들을 app 디렉토리의 폴더 안에 함께 배치할 수 있습니다.
 
-## 컴포넌트 계층 구조
+<br>
+
+### 컴포넌트 계층구조
 
 파일 컨벤션에서 정의된 React 컴포넌트들은 다음과 같은 특정한 계층 구조로 렌더링됩니다.
 
@@ -52,6 +58,8 @@ Next.js는 중첩된 라우트에서 특정 동작을 가진 UI를 만들기 위
 중첩 라우트의 경우, 자식 segment의 컴포넌트들은 부모 segment의 컴포넌트들 안에 중첩됩니다.
 
 ![중첩 컴포넌트 계층](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fnested-file-conventions-component-hierarchy.png&w=1920&q=75&dpl=dpl_Ev1SSnkTzSfmJGJRmYbn4JZhjkvm)
+
+<br>
 
 ## next/link
 
