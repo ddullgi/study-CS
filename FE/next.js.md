@@ -1,10 +1,15 @@
 # next.js
 
+- [app router](#app-router)
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
 
 <br>
+
+## app router
+
+`next.js` 13버전에 추가된 새로운 라우팅 방식이다.
 
 ## next/link
 
