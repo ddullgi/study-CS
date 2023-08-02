@@ -18,7 +18,40 @@ Next.js는 파일 시스템 기반의 라우터를 사용합니다. 이때 폴�
 
 ![route](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Froute-segments-to-path-segments.png&w=1920&q=75&dpl=dpl_3guogY6YECQnnD8P1bp8UJe7CDCH)
 
-각 폴더는 URL 세그먼트에 매핑되는 라우트 세그먼트를 나타냅니다. 중첩된 라우트를 만들기 위해 폴더를 서로 중첩할 수 있습니다.
+각 폴더는 URL segment 에 매핑되는 라우트 segment 를 나타냅니다.
+
+## 파일 컨벤션
+
+Next.js는 중첩된 라우트에서 특정 동작을 가진 UI를 만들기 위해 다음과 같은 파일 컨벤션을 제공합니다.
+
+- layout: segment 와 그 자식들을 위한 공유 UI를 생성합니다.
+- page: 라우트의 고유한 UI를 생성하며 라우트를 공개적으로 접근 가능하게 합니다.
+- loading: segment 와 그 자식들을 위한 로딩 UI를 생성합니다.
+- not-found: segment 와 그 자식들을 위한 찾을 수 없음 UI를 생성합니다.
+- error: segment 와 그 자식들을 위한 에러 UI를 생성합니다.
+- global-error: 전역 에러 UI를 생성합니다.
+- route: 서버 측 API 엔드포인트를 생성합니다.
+- template: 특수화된 다시 렌더링되는 레이아웃 UI를 생성합니다.
+- default: 병렬 라우트를 위한 대체 UI를 생성합니다.
+
+특수 파일 이외에도, 자신이 생성한 파일(예: 컴포넌트, 스타일, 테스트 등)들을 app 디렉토리의 폴더 안에 함께 배치할 수 있습니다.
+
+## 컴포넌트 계층 구조
+
+파일 컨벤션에서 정의된 React 컴포넌트들은 다음과 같은 특정한 계층 구조로 렌더링됩니다.
+
+![컴포넌트 계층 구조](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Ffile-conventions-component-hierarchy.png&w=1920&q=75&dpl=dpl_Ev1SSnkTzSfmJGJRmYbn4JZhjkvm)
+
+1. layout.js
+2. template.js
+3. error.js (React 에러 바운더리)
+4. loading.js (React 서스펜스 바운더리)
+5. not-found.js (React 에러 바운더리)
+6. page.js 또는 중첩된 layout.js
+
+중첩 라우트의 경우, 자식 segment의 컴포넌트들은 부모 segment의 컴포넌트들 안에 중첩됩니다.
+
+![중첩 컴포넌트 계층](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fnested-file-conventions-component-hierarchy.png&w=1920&q=75&dpl=dpl_Ev1SSnkTzSfmJGJRmYbn4JZhjkvm)
 
 ## next/link
 
