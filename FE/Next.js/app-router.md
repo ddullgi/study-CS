@@ -82,14 +82,79 @@ export default function Page() {
 }
 ```
 
-> #### 알아두면 좋은 점
+> #### 참고 사항
 >
 > - page 는 항상 라우트 서브트리의 맨 마지막에 위치합니다.
 > - `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용하여 페이지를 정의할 수 있습니다.
 > - 라우트 segment를 공개적으로 접근 가능하게 하려면 page.js 파일이 필요합니다.
 > - 기본적으로 페이지는 서버 컴포넌트이지만, 클라이언트 컴포넌트로도 설정할 수도 있습니다.
 
+<br>
+
 ## Layouts
+
+레이아웃은 sidebar, navbar와같이 여러 페이지에서 공유되는 UI입니다. 라우팅 중에 레이아웃은 상태를 보존하고 상호작용이 가능하며, 다시 렌더링되지 않습니다. 레이아웃은 중첩될 수도 있습니다.
+
+![Layouts](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Flayout-special-file.png&w=1920&q=75&dpl=dpl_BfrsMtEkFNtWCS4n2Nhqya4WuovP)
+![중첩 컴포넌트 계층](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fnested-file-conventions-component-hierarchy.png&w=1920&q=75&dpl=dpl_Ev1SSnkTzSfmJGJRmYbn4JZhjkvm)
+
+레이아웃은 layout.js 파일에서 React 컴포넌트를 내보내는 방식으로 정의할 수 있습니다. 이 컴포넌트는 children prop을 받아서 렌더링 중에 자식 layout(있을 경우) 또는 자식 page로 채워집니다.
+
+![중첩](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fnested-layouts-ui.png&w=1920&q=75&dpl=dpl_7rjDJs5gNWrZ6yx12qkY2XTnnxuc)
+
+### ex)
+
+```tsx
+export default function DashboardLayout({
+  children, // will be a page or nested layout
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      {/* Include shared UI here e.g. a header or sidebar */}
+      <nav></nav>
+
+      {children}
+    </section>
+  );
+}
+```
+
+> #### 참고 사항
+>
+> - 최상위 layout은 루트 layout이라고 하며, 애플리케이션의 모든 페이지에서 공유됩니다. 루트 layout은 반드시 html과 body 태그를 포함해야 합니다.
+> - 어떤 라우트 segment든지 자체적으로 layout을 정의할 수 있습니다. 이러한 layout은 해당 segment의 모든 페이지에서 공유됩니다.
+> - 라우트 안의 layout은 기본적으로 중첩됩니다. 각 부모 layout은 React children prop을 사용하여 자식 layout을 감쌀 수 있습니다
+> - Route Groups를 사용하여 특정 라우트 segment를 공유 layout에 포함하거나 제외시킬 수 있습니다.
+> - 기본적으로 layout은 서버 컴포넌트이지만, 클라이언트 컴포넌트로도 설정할 수도 있습니다.
+> - layout.js와 page.js 파일은 동일한 폴더에 정의할 수 있습니다. 이 경우 layout이 page를 감쌉니다.
+
+<br>
+
+## 루트 Layout (필수)
+
+루트 layout은 앱 디렉토리의 최상위 수준에서 정의되며 애플리케이션의 모든 페이지에서 공유됩니다. 루트 layout은 반드시 html과 body 태그를 포함해야 합니다.
+
+```tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> #### 참고 사항
+>
+> - 앱 디렉토리에는 루트 layout이 포함되어야 합니다.
+> - Next.js에서 <html> 및 <body> 태그가 자동으로 생성되지 않기 때문에 루트 layout에 정의해야 합니다.
+> - 내장된 SEO 지원을 사용하여 <head> HTML 요소를 관리할 수 있습니다. 예를 들어, <title> 요소를 관리할 수 있습니다.
 
 ## Templates
 
