@@ -29,7 +29,9 @@
 
 ## next.js
 
-- [app router](FE/Next.js/app-router.md)
+- [App Router](FE/Next.js/app-router.md)
+- [next/link](FE/Next.js/next.js.md#nextlink)
+- [next/router](FE/Next.js/next.js.md#nextrouter)
 - [next/image](FE/Next.js/next.js.md#nextimage)
 
 ## 네트워크
