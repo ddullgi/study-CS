@@ -2,6 +2,9 @@
 
 - [App Router](#app-router-1)
 - [Pages](#pages)
+- [Layouts](#layouts)
+- [루트 Layouts](#루트-layout-필수)
+- [Templates](#templates)
 
 <br>
 
@@ -156,8 +159,10 @@ export default function RootLayout({
 > - Next.js에서 <html> 및 <body> 태그가 자동으로 생성되지 않기 때문에 루트 layout에 정의해야 합니다.
 > - 내장된 SEO 지원을 사용하여 <head> HTML 요소를 관리할 수 있습니다. 예를 들어, <title> 요소를 관리할 수 있습니다.
 
+<br>
+
 ## Templates
 
-## 라우트 그룹
+템플릿은 레이아웃과 비슷한 역할을 하며, 자식 레이아웃 또는 페이지를 감싸는 역할을 합니다. 하지만 레이아웃과는 다르게 라우트가 전환될 때 매번 리렌더링되며 상태를 유지하지 않습니다.
 
-## 동적 라우트
+![template](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Ftemplate-special-file.png&w=1920&q=75&dpl=dpl_7rjDJs5gNWrZ6yx12qkY2XTnnxuc)
