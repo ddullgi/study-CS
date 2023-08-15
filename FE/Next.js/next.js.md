@@ -1,10 +1,36 @@
 # next.js
 
+- [서버 컴포넌트와 클라이언트 컴포넌트](#서버-컴포넌트와-클라이언트-컴포넌트)
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
 
 <br>
+
+## 서버 컴포넌트와 클라이언트 컴포넌트
+
+![서버컴포넌트와 클라이언트 컴포넌트](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13043.png)
+
+nextjs의 컴포넌트는 크게 server component와 client component로 구분됩니다. 특별한 처리를 하지 않으면 nextjs에서 컴포넌트는 server component 입니다.
+
+![넥스트 서버 클라이언트 컴포넌트 비교](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13053.png)
+
+위의 그림을 보면 S가 server, C가 client component의 사용 사례를 보여줍니다.
+
+서버 컴포넌트는 아래와 같은 경우에 사용합니다.
+
+사용자와 상호작용하지 않는 경우
+백엔드에 엑세스하면서 보안적으로 위험한 정보를 주고 받는 경우
+클라이언트 컴포넌트는 아래와 같은 경우 사용합니다.
+
+서버 컴포넌트로 해결되지 않는 경우
+사용자와 상호작용하는 경우
+useEffect, useState, onClick, onChange와 같은 API를 사용해야 하는 경우
+useRouter, useParams와 같은 nextjs의 client component API를 사용하는 경우
+
+아래는 nextjs의 구분법입니다.
+
+![그림](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13050.png)
 
 ## next/link
 
@@ -25,6 +51,26 @@ import Link from "next/link";
 
 렌더링 후 element 상에서는 `<a>`태그로서 동작한다.
 
+### Props
+
+#### href(필수)
+
+- 이동할 경로나 URL을 넘겨준다.
+- 예시: `<Link href="/dashboard">대시보드</Link>`
+- 객체로도 사용가능:
+  ```jsx
+  <Link
+    href={{
+      pathname: "/about",
+      query: { name: "test" },
+    }}
+  >
+    소개
+  </Link>
+  ```
+
+````
+
 #### 스크롤에 따른 지연 로딩
 
 `next/link`는 스크롤 위치에 따라 프리로딩을 지연하는 기능을 기본적으로 제공하여 사용자가 스크롤을 통해 특정 영역에 도달할 때까지 필요한 데이터를 프리로드하지 않고, 필요한 순간에 로드하여 효율적인 성능을 제공합니다. 이는 대규모 페이지나 많은 링크가 있는 경우 유용할 수 있으며, 사용자 경험과 초기 로딩 속도를 개선할 수 있습니다.
@@ -41,7 +87,7 @@ export default function Links() {
     </main>
   );
 }
-```
+````
 
 위 코드와 같이 `<Link>`태그를 페이지에 보이는 영역 바깥에 위치하게 될 경우 `<Link>`태그가 보이지 않을 때는 링크 페이지가 프리로드되지 않다가 해당 영역에 스크롤이 닿았을 때 프리로드 됩니다.
 
