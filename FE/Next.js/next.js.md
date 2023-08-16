@@ -1,36 +1,53 @@
 # next.js
 
-- [서버 컴포넌트와 클라이언트 컴포넌트](#서버-컴포넌트와-클라이언트-컴포넌트)
+- [React Server Component](#react-server-component)
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
 
 <br>
 
-## 서버 컴포넌트와 클라이언트 컴포넌트
+## React Server Component
+
+React Server Component(줄여서 RSC)는 React18부터 도입된 개념으로, 말 그대로 서버에서 동작하는 컴포넌트를 가리킨다. 그와 반대 되는 개념인 클라이언트 컴포넌트는 React18 이전 버전에서 우리가 사용하던 모든 컴포넌트를 말한다. 가장 큰 차이점은 컴포넌트의 렌더링 장소가 서버에서 이루어지는가 클라이언트에서 이루어지는가에 차이를 가진다.
+
+next.js 공식문서에서는 다음과 같이 구분한다.
+
+![img](https://velog.velcdn.com/images/2ast/post/226b2cd3-4cb5-47bf-b52c-f0087b4acc3b/image.png)
+
+다이어그램으로 표현하면 다음과 같다.
 
 ![서버컴포넌트와 클라이언트 컴포넌트](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13043.png)
 
-nextjs의 컴포넌트는 크게 server component와 client component로 구분됩니다. 특별한 처리를 하지 않으면 nextjs에서 컴포넌트는 server component 입니다.
+### RSC의 동작 방식
 
-![넥스트 서버 클라이언트 컴포넌트 비교](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13053.png)
+사용자가 페이지에 접속 요청을 보내면 서버는 컴포넌트 트리를 실행하고, 이를 JSON 형태로 직렬화하여 클라이언트로 전달합니다. 이미 완성된 RSC는 직렬화된 결과를 그대로 클라이언트로 전송합니다. 반면, React Client Component (RCC)는 클라이언트에서 JavaScript를 통해 렌더링되므로 직렬화하지 않고 클라이언트로 넘어갑니다.
 
-위의 그림을 보면 S가 server, C가 client component의 사용 사례를 보여줍니다.
+![img](https://velog.velcdn.com/images/2ast/post/465f8024-69c3-47ee-8b6f-1ee3d75b4fda/image.png)
 
-서버 컴포넌트는 아래와 같은 경우에 사용합니다.
+RCC가 위치할 자리는 비워지며, 해당 자리에 대한 정보는 `module reference`라는 새로운 타입으로 지정됩니다. 이 정보는 컴포넌트의 경로를 명시하며, 클라이언트는 이를 활용하여 RCC가 나중에 렌더링될 위치를 파악합니다.
 
-사용자와 상호작용하지 않는 경우
-백엔드에 엑세스하면서 보안적으로 위험한 정보를 주고 받는 경우
-클라이언트 컴포넌트는 아래와 같은 경우 사용합니다.
+![img](https://velog.velcdn.com/images/2ast/post/7ef55ef0-4bef-417d-9e5f-08342345346f/image.png)
 
-서버 컴포넌트로 해결되지 않는 경우
-사용자와 상호작용하는 경우
-useEffect, useState, onClick, onChange와 같은 API를 사용해야 하는 경우
-useRouter, useParams와 같은 nextjs의 client component API를 사용하는 경우
+클라이언트는 서버로부터 결과물과 JavaScript 번들을 받아 초기 화면을 구성하며, `module reference`가 등장하면 해당 컴포넌트의 JavaScript 번들을 동적으로 가져와 렌더링합니다. 이로써 빈 공간이 RCC로 채워지고 최종적으로 완성된 화면이 사용자에게 표시됩니다.
 
-아래는 nextjs의 구분법입니다.
+### Next.js의 SSR
 
-![그림](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/6341/13050.png)
+Next.js의 SSR은 기존의 클라이언트 사이드 렌더링 (CSR)과 서버 사이드 렌더링 (SSR)의 장점을 결합한 형태입니다. 초기 로딩 속도 문제를 갖고 있던 CSR의 단점을 극복하기 위해, Next.js는 초기 로딩 시에 HTML 파일을 서버 사이드 렌더링을 통해 신속하게 받아오고, 그 후에 병렬적으로 JavaScript 번들도 가져와서 클라이언트 측에서 이미 받아온 HTML과 병합하는 과정을 거칩니다. 이 과정은 보통 `hydration`이라고 불립니다. 이러한 방식으로 Next.js의 SSR은 빠른 로딩 속도를 갖는 SSR의 강점과 인터랙션에 더 적합한 CSR의 강점을 모두 활용할 수 있게 되었습니다.
+
+### RSC 장점
+
+- zero bundle size
+
+RSC는 이미 서버에서 실행된 후 직렬화된 JSON 형태로 전달됩니다. 즉, 서버에서 외부 라이브러리의 실행이나 참조 모듈의 실행이 완료된 상태이기 때문에 어떠한 번들도 필요하지 않습니다. 이러한 특성이 Next의 TTI(Time To Interactive) 개선에 크게 기여할 수 있습니다. Next.js의 일반적인 SSR 방식을 사용하더라도 초기 로딩 속도만 빠를 뿐, 상호작용을 위해서는 여전히 CSR과 동일한 크기의 JavaScript 번들을 다운로드해야 하므로 TTI는 여전히 CSR과 비교했을 때 큰 메리트가 없습니다. 하지만 RSC를 도입하게 되면 다운로드해야 하는 번들 사이즈가 줄어들어 TTI가 크게 개선될 수 있습니다.
+
+- Automatic Code Splitting
+
+원래 코드 스플리팅을 위해서는 React.Lazy나 동적 import를 사용해야 했습니다. 그러나 RSC에서 RCC를 import하는 경우에는 자동으로 RCC가 dynamic import됩니다. 이 장점은 어떻게 보면 당연한 사실인데, RSC가 서버에서 렌더링될 때 RCC는 실행되지 않기 때문에 RCC를 즉시 import할 필요가 없습니다.
+
+- 컴포넌트 단위 refetch
+
+SSR의 경우 완성된 HTML 파일을 전송하기 때문에 작은 변경 사항이 발생하더라도 전체 페이지를 다시 받아와야 했습니다. 그러나 앞서 설명한대로 RSC는 최종 결과물이 HTML이 아니라 직렬화된 JSON 형태의 데이터를 받아옵니다. 클라이언트는 이 JSON을 해석하여 가상 DOM을 형성하고 화면을 갱신합니다. 따라서 화면에 변경사항이 생겨 서버에서 새로운 정보를 받아와야 할 상황이 오더라도, 기존 화면의 상태와 컨텍스트를 유지한 채로 변경된 사항만 선택적으로 반영할 수 있습니다. 이는 기존 화면을 완전히 교체하는 것이 아니라 필요한 부분만 업데이트하는 형태로 이루어지게 됩니다.
 
 ## next/link
 
