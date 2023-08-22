@@ -30,6 +30,8 @@
 ## next.js
 
 - [App Router](FE/Next.js/app-router.md)
+- [React Server Component](FE/Next.js/next.js.md#react-server-component)
+- [Streaming](FE/Next.js/next.js.md#streaming)
 - [next/link](FE/Next.js/next.js.md#nextlink)
 - [next/router](FE/Next.js/next.js.md#nextrouter)
 - [next/image](FE/Next.js/next.js.md#nextimage)

@@ -1,7 +1,7 @@
 # next.js
 
 - [React Server Component](#react-server-component)
-- [Streaming]
+- [Streaming](#streaming)
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
