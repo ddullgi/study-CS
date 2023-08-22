@@ -1,6 +1,7 @@
 # next.js
 
 - [React Server Component](#react-server-component)
+- [Streaming]
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
@@ -48,6 +49,32 @@ RSC는 이미 서버에서 실행된 후 직렬화된 JSON 형태로 전달됩�
 - 컴포넌트 단위 refetch
 
 SSR의 경우 완성된 HTML 파일을 전송하기 때문에 작은 변경 사항이 발생하더라도 전체 페이지를 다시 받아와야 했습니다. 그러나 앞서 설명한대로 RSC는 최종 결과물이 HTML이 아니라 직렬화된 JSON 형태의 데이터를 받아옵니다. 클라이언트는 이 JSON을 해석하여 가상 DOM을 형성하고 화면을 갱신합니다. 따라서 화면에 변경사항이 생겨 서버에서 새로운 정보를 받아와야 할 상황이 오더라도, 기존 화면의 상태와 컨텍스트를 유지한 채로 변경된 사항만 선택적으로 반영할 수 있습니다. 이는 기존 화면을 완전히 교체하는 것이 아니라 필요한 부분만 업데이트하는 형태로 이루어지게 됩니다.
+
+## Streaming
+
+React 및 Next.js에서 스트리밍이 작동하는 방식을 배우기위해 사전에 SSR(서버 사이드 렌더링)과 그 한계에 대하여 이해하는 것이 좋습니다.
+
+SSR을 통해 사용자가 페이지를 보기 전에 아래의 과정을 거칩니다.
+
+![Chart showing Server Rendering without Streaming](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fserver-rendering-without-streaming-chart.png&w=1920&q=75&dpl=dpl_6NUrNrbyMhexcnM4rTkyd8NkejGW)
+
+1. 서버에서 페이지의 데이터를 가져옵니다.
+2. 서버는 페이지의 HTML을 렌더링합니다.
+3. HTML, CSS 및 JavaScript 파일을 클라이언트로 전송합니다.
+4. 클라이언트는 먼저 HTML과 CSS를 사용하여 페이지의 정적인 부분을 렌더링합니다.
+5. JavaScript 파일이 로드되면 클라이언트 측에서 페이지를 활성화하고 동적 요소를 화면에 표시합니다.
+
+이러한 과정은 순차적으로 진행되며, Hydration이 완료되기 전까지 사용자는 페이지와 상호작용할 수 없습니다. 이로 인해 초기 렌더링은 빠르지만 TTI까지는 완전하지 않습니다.
+
+Next.js 버전 13부터 도입된 Streaming은 이러한 문제를 해결하기 위해 Server Component를 활용해 페이지의 HTML을 작은 청크로 나누어 클라이언트에 병렬로 전송합니다.
+
+![How Server Rendering with Streaming Works](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fserver-rendering-with-streaming.png&w=3840&q=75&dpl=dpl_6NUrNrbyMhexcnM4rTkyd8NkejGW)
+
+이 방법을 통해 우선순위가 높거나 데이터에 의존하지 않는 컴포넌트(예: 레이아웃)가 먼저 전송되어 브라우저에서 더 빠른 Hydration이 가능해집니다. 그리고 데이터 패칭이 필요한 컴포넌트나 낮은 우선순위의 요소는 데이터를 가져온 후 클라이언트로 전송됩니다.
+
+![Chart showing Server Rendering with Streaming](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fserver-rendering-with-streaming-chart.png&w=1920&q=75&dpl=dpl_6NUrNrbyMhexcnM4rTkyd8NkejGW)
+
+따라서 Streaming을 사용하면 페이지가 렌더링되는 중에도 이미 Hydration이 완료된 컴포넌트는 사용자와 상호작용할 수 있습니다. 이것은 사용자 경험을 크게 향상시키는 데 도움이 됩니다.
 
 ## next/link
 
