@@ -171,3 +171,100 @@ export default function Links() {
 - router.forward: 히스토리 스택에서 다음 경로로 이동합니다.
 
 ## next/image
+
+이미지는 일반적인 웹사이트의 크기의 상당히 많은 부분을 차지합니다.이는 웹사이트의 LCP 성능에 상당한 영향을 미칠수 있습니다.
+
+Next.js에서는 `<Image/>` 컴포넌트를 사용하여 이미지를 자동으로 최적화하여 LCP 성능을 개선합니다.
+
+#### 이미지 포멧 변경
+
+jpeg, png등의 원본 파일을 Webp 나 AVIF 같은 최신의 이미지 형식으로 자동으로 변환하여 이미지 용량을 크게 줄여줍니다. `quality` 속성을 통해 이미지 최적화율을 조정할 수 있습니다.(default: 75)
+
+#### 시각적인 안정
+
+웹사이트를 이용하는 도중 메뉴를 클릭했는데 갑자기 광고나 이미지가 그자리에 로딩되어 의도하지 않은 페이지로 이동하는 경험이 있을 것이다.이러한 현상을 `Cumulative Layout Shift` 줄여서 `CLS`라고 부릅니다. Next는 이러한 현상을 방지하기 위해 기본적으로 `width`, `height`의 값을 받아 이미지가 로딩되는 동안 해당 영역을 비워 둡니다. 이를 통해 페이지 로딩이 완료되는 사이에 레이아웃이 변경되는 것을 방지합니다. `placeholder`속성을 사용하여 비어있는 영역을 blur이미지나 대체 이미지로 채워놓을 수도 있습니다.
+
+#### lazy loading
+
+이미지가 뷰포트 바깥에 있을 때는 로딩을 지연시키다가 뷰포트 내부로 들어왔을 경우 로드하는 기술입니다.눈에 보이는 부분만 먼저 로드하고 그외의 부분은 지연시킴으로서 페이지의 초기로딩을 개선시킬수 있습니다. `<img/>`태그에 `loading="lazy"`속성을 추가하는 것으로도 적용할 수 있으나 next/image는 이를 자동으로 적용시켜줍니다.
+
+### 캐싱 동작
+
+이미지는 요청 시 동적으로 최적화되어 `<distDir>/cache/images` 디렉터리에 저장됩니다. 이 최적화된 이미지 파일은 만료되기 전까지 후속 요청에 대해 제공됩니다. 이미 캐시되었지만 만료된 파일과 일치하는 요청이 발생하면, 이전 버전의 이미지가 해당 요청에 사용됩니다(이를 "stale"이라고도 합니다). 이후 이미지는 백그라운드에서 다시 최적화되며, 새로운 만료 날짜와 함께 캐시에 저장됩니다.
+
+응답 헤더의 x-nextjs-cache 값을 읽음으로써 Next 이미지의 캐시 상태를 확인할 수 있습니다.
+
+- MISS: 해당 경로의 이미지가 캐시에 없습니다. (첫 방문 시에 한 번만 발생)
+- STALE: 해당 경로의 이미지는 캐시에 있지만, 만료 시간을 초과하여 백그라운드로 업데이트됩니다.
+- HIT: 해당 경로의 이미지가 캐시에 있으며, 만료 시간동안 유효합니다.
+
+만료시간은 `minimumCacheTTL`과 `Cache-Control`를 통해 조절할 수 있습니다.
+
+### 사용법
+
+```jsx
+import Image from "next/image";
+```
+
+#### 로컬 이미지
+
+로컬 이미지 는 .`jpg`, `.png`, `.webp`등의 파일을 import 구문으로 가져와서 사용합니다. Next가 사전에 이미지의 크기를 알 수 있기 때문에 `width`, `height`의 값을 생략할 수 있습니다. 이 사전에 측정된 크기를 통해 `CLS`를 방지합니다. 빌드시 분석되기 때문에 `다이나믹 import`나 `require문`은 지원하지 않습니다.
+
+```jsx
+import Image from "next/image";
+import profilePic from "./me.png";
+
+export default function Page() {
+  return <Image src={profilePic} alt="Picture of the author" />;
+}
+```
+
+#### 원격 이미지
+
+`next/image`의 src속성을 문자열이나 URL로 사용하는 경우입니다. Next.js는 빌트 타입에 원격 파일에 액세스할 수 없기 때문에 `width`, `height`값을 제공해줘야 합니다. 이미지의 사이즈를 모를 경우 `fill`속성을 통해 부모의 사이즈로 대체할 수 있습니다.
+
+```jsx
+import Image from "next/image";
+
+export default function Page() {
+  return (
+    <Image
+      src="https://s3.amazonaws.com/my-bucket/profile.png"
+      alt="Picture of the author"
+      width={500}
+      height={500}
+    />
+  );
+}
+```
+
+Next.js는 기본적으로 외부사이트를 허용하지 않기 때문에 `next.config.js`파일에 예외로 할 URL 패턴 목록을 정의해야됩니다.
+
+```jsx
+// next.config.js
+
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "s3.amazonaws.com",
+        port: "",
+        pathname: "/my-bucket/**",
+      },
+    ],
+  },
+};
+```
+
+만일 해당 도메인에서 제고오디는 모든 컨텐츠를 소유한 경우에는 `domains`을 사용해도 됩니다. 그외에는 앱을 보호하기 위해 `remotePatterns`으로 엄격한 구성을 권장합니다.
+
+```jsx
+// next.config.js
+
+module.exports = {
+  images: {
+    domains: ["assets.acme.com"],
+  },
+};
+```
