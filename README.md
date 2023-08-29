@@ -35,6 +35,7 @@
 - [next/link](FE/Next.js/next.js.md#nextlink)
 - [next/router](FE/Next.js/next.js.md#nextrouter)
 - [next/image](FE/Next.js/next.js.md#nextimage)
+- [Data fetching](FE/Next.js/next.js.md#data-fetching)
 
 ## 네트워크
 

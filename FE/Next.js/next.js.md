@@ -5,6 +5,7 @@
 - [next/link](#nextlink)
 - [next/router](#nextrouter)
 - [next/image](#nextimage)
+- [Data fetching](#data-fetching)
 
 <br>
 
@@ -268,3 +269,23 @@ module.exports = {
   },
 };
 ```
+
+## Data fetching
+
+### Page router (Next 13 이전)
+
+#### getStaticProps
+
+SSG 방식에서 사용됩니다. SSG는 빌드 시에 페이지를 생성하며, 이후 변경이 없으면 한 번만 호출됩니다. 빌드 타임에 데이터를 가져오므로 초기 페이지 로딩 속도가 매우 빠릅니다. 데이터 변경이 필요한 경우 페이지를 재빌드해야 합니다.
+
+#### getStaticPaths
+
+페이지가 동적 라우팅을 사용하면서 `getStaticProps`도 사용할 경우, `getStaticPaths`를 추가하여 정적으로 렌더링할 경로를 설정합니다. 이렇게 하지 않으면 해당 경로로 접근 시 404 페이지가 표시됩니다. 따라서 동적 라우팅 시 모든 가능한 경우의 경로를 정의해야 합니다.
+
+#### getServerSideProps
+
+SSR 방식에서 사용됩니다. 각 페이지 요청마다 서버에서 데이터를 가져와 페이지 컴포넌트의 props로 전달합니다. 서버 사이드에서 데이터를 가져오기 때문에 항상 최신 데이터를 보여줄 수 있습니다. 실시간 업데이트가 필요한 경우에 적합합니다.
+
+### App router
+
+데이터를 가져오기 위해 `fetch()`를 사용합니다. 서버 컴포넌트의 경우 `async/await`를 사용하여 비동기적으로 데이터를 가져옵니다. 기존 브라우저의 `Fetch API`를 확장한 API를 Next에서 제공해 줍니다. 별도 설정을 하지않아도 Next가 자동으로 데이터를 캐시해줍니다.
