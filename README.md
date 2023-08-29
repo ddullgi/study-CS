@@ -18,6 +18,8 @@
 - [scope](FE/Javascript.md#scope)
 - [AJAX](FE/Javascript.md#AJAX)
 - [CSR vs SSR vs SSG](FE/Javascript.md#csr-vs-ssr-vs-ssg)
+- [가비지 컬렉터](FE/Javascript.md#가비지-컬렉터)
+- [프론트엔드 성능 측정](FE/Javascript.md#프론트엔드-성능-측정)
 
 ## Typescript
 
