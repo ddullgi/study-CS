@@ -15,6 +15,9 @@
 
 ## 패턴
 
+- [도메인 주도 설계(DDD, Domain-Driven Design)](패턴/Pattern.md#도메인-주도-설계ddd-domain-driven-design)
+- [이벤트 주도 아키텍처(EDA, Event-Driven Architecture)](패턴/Pattern.md#이벤트-주도-아키텍처eda-event-driven-architecture)
+
 ## HTML
 
 - [시맨틱 태그](FE/HTML.md#시맨틱-태그)
