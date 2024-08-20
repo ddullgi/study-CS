@@ -1,5 +1,6 @@
 # Typescript
 
+- [any 타입](#any-타입)
 - [제네릭](#제네릭)
 
 <br>
@@ -255,6 +256,39 @@ const capt: Developer = {
 ```
 
 - **interface 자식인터페이스 extends 부모인터페이스**로 인터페이스 상속
+
+<br>
+
+## any 타입
+
+TypeScript에서 모든 타입의 값을 가질 수 있는 타입으로 타입스크립트의 타입검사를 무시하기 때문에 타입스크립트를 사용하지 않는 것과 같기 때문에 사용하지 않는 것을 권장한다.
+
+```ts
+let variable: any;
+
+variable = 10; // number
+variable = "hello"; // string
+variable = true; // boolean
+```
+
+<br>
+
+## unknown 타입
+
+`unknown`은 TypeScript 3.0버전에서 도입된 타입으로 `any`와 유사하게 모든 타입의 값을 가질 수 있지만, 타입 검사를 강제하기 때문에 더 안전하게 사용할 수 있다.
+
+```ts
+let value: unknown;
+
+value = 10;
+value = "hello";
+value = true;
+
+// 타입 확인을 통해 안전하게 사용
+if (typeof value === "string") {
+  console.log(value.toUpperCase()); // 안전하게 문자열 메서드 사용 가능
+}
+```
 
 <br>
 
